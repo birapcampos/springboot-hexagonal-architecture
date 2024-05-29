@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("api/v1/orders")
 public class OrderController {
     private CreateOrderUseCase createOrderUseCase;
     private UpdateOrderUseCase updateOrderUseCase;

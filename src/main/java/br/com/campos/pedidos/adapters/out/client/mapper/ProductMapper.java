@@ -17,19 +17,6 @@ public class ProductMapper {
                 entity.getPrice());
     }
 
-    public Optional<ProductResponse> toOptionalProductResponse(Optional<ProductEntity> productEntity) {
-        if (productEntity.isPresent()) {
-            ProductEntity entity = productEntity.get();
-            ProductResponse productResponse = new ProductResponse(
-                    entity.getId(),
-                    entity.getName(),
-                    entity.getPrice());
-            return Optional.of(productResponse);
-        } else {
-            return Optional.empty();
-        }
-    }
-
     public ProductEntity toEntity(ProductRequest product){
         return new ProductEntity(
                 product.getId(),
