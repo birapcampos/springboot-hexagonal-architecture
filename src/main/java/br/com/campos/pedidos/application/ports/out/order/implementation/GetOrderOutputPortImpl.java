@@ -1,9 +1,10 @@
-package br.com.campos.pedidos.application.ports.out.order;
+package br.com.campos.pedidos.application.ports.out.order.implementation;
 
 import br.com.campos.pedidos.adapters.out.repository.OrderRepository;
 import br.com.campos.pedidos.adapters.out.repository.entity.OrderEntity;
 import br.com.campos.pedidos.adapters.out.client.response.OrderItemResponse;
 import br.com.campos.pedidos.adapters.out.client.response.OrderResponse;
+import br.com.campos.pedidos.application.ports.out.order.GetOrderOutputPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

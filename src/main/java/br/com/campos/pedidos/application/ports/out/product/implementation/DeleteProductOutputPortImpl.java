@@ -1,9 +1,10 @@
-package br.com.campos.pedidos.application.ports.out.product;
+package br.com.campos.pedidos.application.ports.out.product.implementation;
 
 import br.com.campos.pedidos.adapters.out.repository.ProductRepository;
 import br.com.campos.pedidos.adapters.out.repository.entity.ProductEntity;
 import br.com.campos.pedidos.application.exceptions.ProductNotFoundException;
 import br.com.campos.pedidos.adapters.out.client.mapper.ProductMapper;
+import br.com.campos.pedidos.application.ports.out.product.DeleteProductOutputPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

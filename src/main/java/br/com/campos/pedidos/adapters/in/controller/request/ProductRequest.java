@@ -1,15 +1,19 @@
 package br.com.campos.pedidos.adapters.in.controller.request;
 
-import jakarta.persistence.Transient;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
-import lombok.Data;
+import jakarta.validation.constraints.Size;
 
-@Data
-public class ProductRequest {
-    private Long id;
-    @NotBlank
-    private String name;
-    @Positive
-    private double price;
-}
+public record ProductRequest (
+
+        Long id,
+
+        @Size(min=3,max=50,message = "Deve ter entre 3 e 50 characters.")
+        @NotBlank(message = "Não pode ser branco ou nulo.")
+        String name,
+
+        @Positive(message = "Deve maior do que zero.")
+        double price
+
+){}

@@ -1,7 +1,7 @@
 package br.com.campos.pedidos.application.config;
 
 import br.com.campos.pedidos.application.core.usecase.order.DeleteOrderUseCase;
-import br.com.campos.pedidos.application.ports.out.order.DeleteOrderOutputPortImpl;
+import br.com.campos.pedidos.application.ports.out.order.implementation.DeleteOrderOutputPortImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -1,4 +1,4 @@
-package br.com.campos.pedidos.application.ports.out.order;
+package br.com.campos.pedidos.application.ports.out.order.implementation;
 
 import br.com.campos.pedidos.adapters.in.controller.request.OrderRequest;
 import br.com.campos.pedidos.adapters.out.repository.OrderRepository;
@@ -9,6 +9,7 @@ import br.com.campos.pedidos.adapters.out.repository.entity.ProductEntity;
 import br.com.campos.pedidos.application.exceptions.OrderNotFoundException;
 import br.com.campos.pedidos.adapters.out.client.response.OrderItemResponse;
 import br.com.campos.pedidos.adapters.out.client.response.OrderResponse;
+import br.com.campos.pedidos.application.ports.out.order.UpdateOrderOutputPort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class UpdateOrderOutputPortImpl implements UpdateOrderOutputPort {
         OrderEntity orderEntity = orderRepository.findById(id)
                 .orElseThrow(() -> new OrderNotFoundException(id.toString()));
 
-        orderEntity.setCustomerName(updatedOrder.getCustomerName());
+        orderEntity.setCustomerName(updatedOrder.customerName());
 
         // Mapeia os itens existentes da ordem usando stream
         Map<Long, OrderItemEntity> existingItemsMap = orderEntity.getItems().stream()
@@ -41,7 +42,7 @@ public class UpdateOrderOutputPortImpl implements UpdateOrderOutputPort {
                         orderItemEntity -> orderItemEntity));
 
         // Atualiza as quantidades dos itens existentes ou adiciona novos itens
-        List<OrderItemEntity> updatedItems = updatedOrder.getItems().stream()
+        List<OrderItemEntity> updatedItems = updatedOrder.items().stream()
                 .map(orderItem -> {
                     OrderItemEntity existingItem = existingItemsMap.get(orderItem.getProduct().getId());
                     if (existingItem != null) {

@@ -4,18 +4,20 @@ import br.com.campos.pedidos.application.core.domain.OrderItem;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
-@Data
-public class OrderRequest {
+public record OrderRequest (
 
     @Transient
-    private Long id;
-    @NotBlank
-    private String customerName;
+    Long id,
+    @Size(min=3,max=50,message = "Deve ter entre 3 e 50 characters.")
+    @NotBlank(message = "Não pode ser branco ou nulo.")
+    String customerName,
 
     @Min.List(@Min(1))
-    private List<OrderItem> items;
-}
+    List<OrderItem> items
+
+) {}
+
