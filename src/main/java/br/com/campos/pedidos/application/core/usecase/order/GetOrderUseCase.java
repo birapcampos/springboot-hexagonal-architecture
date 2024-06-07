@@ -1,7 +1,7 @@
 package br.com.campos.pedidos.application.core.usecase.order;
 
 import br.com.campos.pedidos.application.ports.out.order.GetOrderOutputPort;
-import br.com.campos.pedidos.adapters.out.client.response.OrderResponse;
+import br.com.campos.pedidos.adapters.out.response.OrderResponse;
 
 import java.util.List;
 import java.util.Optional;

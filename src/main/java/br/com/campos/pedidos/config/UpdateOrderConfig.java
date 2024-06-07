@@ -1,7 +1,7 @@
-package br.com.campos.pedidos.application.config;
+package br.com.campos.pedidos.config;
 
 import br.com.campos.pedidos.application.core.usecase.order.UpdateOrderUseCase;
-import br.com.campos.pedidos.application.ports.out.order.implementation.UpdateOrderOutputPortImpl;
+import br.com.campos.pedidos.adapters.out.order.implementation.UpdateOrderOutputPortImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

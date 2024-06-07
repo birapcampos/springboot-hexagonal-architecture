@@ -1,4 +1,4 @@
-package br.com.campos.pedidos.adapters.out.client.response;
+package br.com.campos.pedidos.adapters.out.response;
 
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package br.com.campos.pedidos.application.ports.out.order.implementation;
+package br.com.campos.pedidos.adapters.out.order;
 
 import br.com.campos.pedidos.adapters.in.controller.request.OrderRequest;
 import br.com.campos.pedidos.adapters.out.repository.OrderRepository;
@@ -7,8 +7,8 @@ import br.com.campos.pedidos.adapters.out.repository.entity.OrderEntity;
 import br.com.campos.pedidos.adapters.out.repository.entity.OrderItemEntity;
 import br.com.campos.pedidos.adapters.out.repository.entity.ProductEntity;
 import br.com.campos.pedidos.application.exceptions.OrderNotFoundException;
-import br.com.campos.pedidos.adapters.out.client.response.OrderItemResponse;
-import br.com.campos.pedidos.adapters.out.client.response.OrderResponse;
+import br.com.campos.pedidos.adapters.out.response.OrderItemResponse;
+import br.com.campos.pedidos.adapters.out.response.OrderResponse;
 import br.com.campos.pedidos.application.ports.out.order.UpdateOrderOutputPort;
 import org.springframework.stereotype.Component;
 
@@ -17,12 +17,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
-public class UpdateOrderOutputPortImpl implements UpdateOrderOutputPort {
+public class UpdateOrderAdapter implements UpdateOrderOutputPort {
 
     private OrderRepository orderRepository;
     private ProductRepository productRepository;
 
-    public UpdateOrderOutputPortImpl(OrderRepository orderRepository, ProductRepository productRepository) {
+    public UpdateOrderAdapter(OrderRepository orderRepository, ProductRepository productRepository) {
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
     }

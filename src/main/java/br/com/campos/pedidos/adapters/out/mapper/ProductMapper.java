@@ -1,7 +1,7 @@
-package br.com.campos.pedidos.adapters.out.client.mapper;
+package br.com.campos.pedidos.adapters.out.mapper;
 
 import br.com.campos.pedidos.adapters.in.controller.request.ProductRequest;
-import br.com.campos.pedidos.adapters.out.client.response.ProductResponse;
+import br.com.campos.pedidos.adapters.out.response.ProductResponse;
 import br.com.campos.pedidos.adapters.out.repository.entity.ProductEntity;
 import org.springframework.stereotype.Component;
 @Component

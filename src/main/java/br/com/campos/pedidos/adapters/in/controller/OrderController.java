@@ -1,7 +1,7 @@
 package br.com.campos.pedidos.adapters.in.controller;
 
 import br.com.campos.pedidos.adapters.in.controller.request.OrderRequest;
-import br.com.campos.pedidos.adapters.out.client.response.OrderResponse;
+import br.com.campos.pedidos.adapters.out.response.OrderResponse;
 import br.com.campos.pedidos.application.core.usecase.order.CreateOrderUseCase;
 import br.com.campos.pedidos.application.core.usecase.order.DeleteOrderUseCase;
 import br.com.campos.pedidos.application.core.usecase.order.GetOrderUseCase;

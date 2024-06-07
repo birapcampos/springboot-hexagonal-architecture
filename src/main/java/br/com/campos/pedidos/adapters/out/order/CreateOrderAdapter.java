@@ -1,8 +1,8 @@
-package br.com.campos.pedidos.application.ports.out.order.implementation;
+package br.com.campos.pedidos.adapters.out.order;
 
 import br.com.campos.pedidos.adapters.in.controller.request.OrderRequest;
-import br.com.campos.pedidos.adapters.out.client.response.OrderItemResponse;
-import br.com.campos.pedidos.adapters.out.client.response.OrderResponse;
+import br.com.campos.pedidos.adapters.out.response.OrderItemResponse;
+import br.com.campos.pedidos.adapters.out.response.OrderResponse;
 import br.com.campos.pedidos.adapters.out.repository.OrderRepository;
 import br.com.campos.pedidos.adapters.out.repository.ProductRepository;
 import br.com.campos.pedidos.adapters.out.repository.entity.OrderEntity;
@@ -17,12 +17,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class CreateOrderOutputPortImpl implements CreateOrderOutputPort {
+public class CreateOrderAdapter implements CreateOrderOutputPort {
 
     private ProductRepository productRepository;
     private OrderRepository orderRepository;
     @Autowired
-    public CreateOrderOutputPortImpl(
+    public CreateOrderAdapter(
             ProductRepository productRepository,
             OrderRepository orderRepository) {
 
@@ -39,7 +39,8 @@ public class CreateOrderOutputPortImpl implements CreateOrderOutputPort {
         List<OrderItemEntity> orderItemEntities = order.items().stream()
                 .map(orderItem -> {
                     ProductEntity productEntity = productRepository.findById(orderItem.getProduct().getId())
-                            .orElseThrow(() -> new ProductNotFoundException(orderItem.getProduct().getId().toString()));
+                            .orElseThrow(() -> new ProductNotFoundException(orderItem.getProduct().getId()
+                                    .toString()));
                     return new OrderItemEntity(null, productEntity, orderItem.getQuantity(), orderEntity);
                 })
                 .collect(Collectors.toList());
