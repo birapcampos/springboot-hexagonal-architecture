@@ -8,10 +8,11 @@ import br.com.campos.pedidos.adapters.out.repository.ProductRepository;
 import br.com.campos.pedidos.adapters.out.repository.entity.OrderEntity;
 import br.com.campos.pedidos.adapters.out.repository.entity.OrderItemEntity;
 import br.com.campos.pedidos.adapters.out.repository.entity.ProductEntity;
-import br.com.campos.pedidos.application.exceptions.ProductNotFoundException;
+import br.com.campos.pedidos.exceptions.ProductNotFoundException;
 import br.com.campos.pedidos.application.ports.out.order.CreateOrderOutputPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,6 +32,7 @@ public class CreateOrderAdapter implements CreateOrderOutputPort {
     }
 
     @Override
+    @Transactional
     public OrderResponse createOrder(OrderRequest order) {
 
         OrderEntity orderEntity = new OrderEntity();

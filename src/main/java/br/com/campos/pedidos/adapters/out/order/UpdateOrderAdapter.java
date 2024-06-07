@@ -6,11 +6,12 @@ import br.com.campos.pedidos.adapters.out.repository.ProductRepository;
 import br.com.campos.pedidos.adapters.out.repository.entity.OrderEntity;
 import br.com.campos.pedidos.adapters.out.repository.entity.OrderItemEntity;
 import br.com.campos.pedidos.adapters.out.repository.entity.ProductEntity;
-import br.com.campos.pedidos.application.exceptions.OrderNotFoundException;
+import br.com.campos.pedidos.exceptions.OrderNotFoundException;
 import br.com.campos.pedidos.adapters.out.response.OrderItemResponse;
 import br.com.campos.pedidos.adapters.out.response.OrderResponse;
 import br.com.campos.pedidos.application.ports.out.order.UpdateOrderOutputPort;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ public class UpdateOrderAdapter implements UpdateOrderOutputPort {
     }
 
     @Override
+    @Transactional
     public OrderResponse updateOrder(Long id, OrderRequest updatedOrder) {
 
         OrderEntity orderEntity = orderRepository.findById(id)

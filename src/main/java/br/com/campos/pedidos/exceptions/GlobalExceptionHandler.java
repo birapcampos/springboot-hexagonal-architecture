@@ -1,7 +1,7 @@
-package br.com.campos.pedidos.application.exceptions;
+package br.com.campos.pedidos.exceptions;
 
-import br.com.campos.pedidos.application.exceptions.message.ErrorDetail;
-import br.com.campos.pedidos.application.exceptions.message.ErrorResponse;
+import br.com.campos.pedidos.exceptions.message.ErrorDetail;
+import br.com.campos.pedidos.exceptions.message.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;

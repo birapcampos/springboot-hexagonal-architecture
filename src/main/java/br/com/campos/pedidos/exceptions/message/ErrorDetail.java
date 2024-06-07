@@ -1,4 +1,4 @@
-package br.com.campos.pedidos.application.exceptions.message;
+package br.com.campos.pedidos.exceptions.message;
 
 public class ErrorDetail {
 

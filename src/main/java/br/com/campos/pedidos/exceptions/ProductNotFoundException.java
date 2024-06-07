@@ -1,4 +1,4 @@
-package br.com.campos.pedidos.application.exceptions;
+package br.com.campos.pedidos.exceptions;
 
 public class ProductNotFoundException extends RuntimeException {
     public ProductNotFoundException(String id) {

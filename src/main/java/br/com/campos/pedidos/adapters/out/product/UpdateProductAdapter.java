@@ -3,7 +3,7 @@ package br.com.campos.pedidos.adapters.out.product;
 import br.com.campos.pedidos.adapters.in.controller.request.ProductRequest;
 import br.com.campos.pedidos.adapters.out.repository.ProductRepository;
 import br.com.campos.pedidos.adapters.out.repository.entity.ProductEntity;
-import br.com.campos.pedidos.application.exceptions.ProductNotFoundException;
+import br.com.campos.pedidos.exceptions.ProductNotFoundException;
 import br.com.campos.pedidos.adapters.out.mapper.ProductMapper;
 import br.com.campos.pedidos.adapters.out.response.ProductResponse;
 import br.com.campos.pedidos.application.ports.out.product.UpdateProductOutputPort;

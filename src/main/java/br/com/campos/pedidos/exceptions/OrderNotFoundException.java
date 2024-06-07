@@ -1,4 +1,4 @@
-package br.com.campos.pedidos.application.exceptions;
+package br.com.campos.pedidos.exceptions;
 
 public class OrderNotFoundException extends RuntimeException{
 
