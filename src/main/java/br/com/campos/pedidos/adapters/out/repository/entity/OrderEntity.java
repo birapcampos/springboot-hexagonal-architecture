@@ -1,21 +1,18 @@
 package br.com.campos.pedidos.adapters.out.repository.entity;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
+
 import java.io.Serializable;
 import java.util.List;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 @Entity
 @Table(name = "orders")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class OrderEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;

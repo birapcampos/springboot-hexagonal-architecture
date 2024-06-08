@@ -25,7 +25,8 @@ public class GetOrderAdapter implements GetOrderOutputPort {
     @Override
     public Optional<OrderResponse> getOrderById(Long id) {
         return orderRepository.findById(id)
-                .map(orderEntity -> new OrderResponse(orderEntity.getId(), orderEntity.getCustomerName(),
+                .map(orderEntity -> new OrderResponse(orderEntity.getId(),
+                        orderEntity.getCustomerName(),
                         orderEntity.getItems().stream()
                                 .map(orderItemEntity -> new OrderItemResponse(
                                         orderItemEntity.getId(),

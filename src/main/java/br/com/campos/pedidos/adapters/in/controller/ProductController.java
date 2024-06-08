@@ -1,8 +1,8 @@
 package br.com.campos.pedidos.adapters.in.controller;
 
 import br.com.campos.pedidos.adapters.in.controller.request.ProductRequest;
-import br.com.campos.pedidos.application.core.usecase.product.ProductUseCase;
 import br.com.campos.pedidos.adapters.out.response.ProductResponse;
+import br.com.campos.pedidos.application.ports.in.product.ProductInputPort;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,41 +16,41 @@ import java.util.Optional;
 @RequestMapping("api/v1/product")
 public class ProductController {
 
-    private ProductUseCase productUseCase;
+    private ProductInputPort productInputPort;
 
     @Autowired
-    public ProductController(ProductUseCase productUseCase) {
-        this.productUseCase = productUseCase;
+    public ProductController(ProductInputPort productInputPort) {
+        this.productInputPort=productInputPort;
     }
 
     @PostMapping
     public ResponseEntity<ProductResponse> createProduct(@Valid @RequestBody ProductRequest product) {
-        var productResponse = productUseCase.create(product);
+        var productResponse = productInputPort.create(product);
         return ResponseEntity.status(HttpStatus.CREATED).body(productResponse);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<ProductResponse>> getProduct(@PathVariable Long id) {
-        Optional<ProductResponse> productResponse = productUseCase.getProduct(id);
+        Optional<ProductResponse> productResponse = productInputPort.getProduct(id);
         return ResponseEntity.ok(productResponse);
     }
 
     @GetMapping
     public ResponseEntity<List<ProductResponse>> getAllProducts() {
-        List<ProductResponse> products = productUseCase.getAllProducts();
+        List<ProductResponse> products = productInputPort.getAllProducts();
         return ResponseEntity.ok(products);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        productUseCase.deleteProduct(id);
+        productInputPort.deleteProduct(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id,
                                                          @Valid @RequestBody ProductRequest product) {
-        ProductResponse updatedProduct = productUseCase.updateProduct(id, product);
+        ProductResponse updatedProduct = productInputPort.updateProduct(id, product);
         return ResponseEntity.ok(updatedProduct);
     }
 }

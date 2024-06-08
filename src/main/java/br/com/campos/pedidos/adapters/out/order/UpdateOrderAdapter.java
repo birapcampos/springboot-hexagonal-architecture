@@ -23,6 +23,7 @@ public class UpdateOrderAdapter implements UpdateOrderOutputPort {
     private OrderRepository orderRepository;
     private ProductRepository productRepository;
 
+
     public UpdateOrderAdapter(OrderRepository orderRepository, ProductRepository productRepository) {
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
@@ -37,23 +38,19 @@ public class UpdateOrderAdapter implements UpdateOrderOutputPort {
 
         orderEntity.setCustomerName(updatedOrder.customerName());
 
-        // Mapeia os itens existentes da ordem usando stream
         Map<Long, OrderItemEntity> existingItemsMap = orderEntity.getItems().stream()
                 .collect(Collectors.toMap(orderItemEntity ->
                                 orderItemEntity.getProduct().getId(),
                         orderItemEntity -> orderItemEntity));
 
-        // Atualiza as quantidades dos itens existentes ou adiciona novos itens
         List<OrderItemEntity> updatedItems = updatedOrder.items().stream()
                 .map(orderItem -> {
                     OrderItemEntity existingItem = existingItemsMap.get(orderItem.getProduct().getId());
                     if (existingItem != null) {
-                        // Atualiza a quantidade do item existente
                         existingItem.setQuantity(orderItem.getQuantity());
                         return existingItem;
                     } else {
-                        // Cria um novo item se não existir
-                        ProductEntity productEntity = productRepository.findById(orderItem.getProduct().getId())
+                      ProductEntity productEntity = productRepository.findById(orderItem.getProduct().getId())
                                 .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + orderItem.getProduct().getId()));
                         return new OrderItemEntity(null, productEntity, orderItem.getQuantity(), orderEntity);
                     }
