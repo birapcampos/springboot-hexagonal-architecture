@@ -38,21 +38,33 @@ public class UpdateOrderAdapter implements UpdateOrderOutputPort {
 
         orderEntity.setCustomerName(updatedOrder.getCustomerName());
 
+        /*
+        Cria um mapa das OrderItemEntity existentes na orderEntity atual,
+        onde a chave é o ID do produto (orderItemEntity.getProduct().getId())
+        e o valor é a própria OrderItemEntity.
+        */
         Map<Long, OrderItemEntity> existingItemsMap = orderEntity.getItems().stream()
                 .collect(Collectors.toMap(orderItemEntity ->
                                 orderItemEntity.getProduct().getId(),
                         orderItemEntity -> orderItemEntity));
 
+
+        /*
+        Mapeia os itens atualizando a updatedOrder para as OrderItemEntity correspondentes
+        na orderEntity ou cria novas OrderItemEntity se não existirem.
+         */
         List<OrderItemEntity> updatedItems = updatedOrder.getItems().stream()
                 .map(orderItem -> {
                     OrderItemEntity existingItem = existingItemsMap.get(orderItem.getProduct().getId());
+
                     if (existingItem != null) {
                         existingItem.setQuantity(orderItem.getQuantity());
                         return existingItem;
                     } else {
                       ProductEntity productEntity = productRepository.findById(orderItem.getProduct().getId())
                                 .orElseThrow(() -> new IllegalArgumentException("Product not found with ID: " + orderItem.getProduct().getId()));
-                        return new OrderItemEntity(null, productEntity, orderItem.getQuantity(), orderEntity);
+
+                      return new OrderItemEntity(null, productEntity, orderItem.getQuantity(), orderEntity);
                     }
                 })
                 .collect(Collectors.toList());
