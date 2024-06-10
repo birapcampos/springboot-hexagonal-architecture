@@ -1,12 +1,12 @@
 package br.com.campos.pedidos.adapters.out.order;
 
-import br.com.campos.pedidos.adapters.in.controller.request.OrderRequest;
 import br.com.campos.pedidos.adapters.out.repository.OrderRepository;
 import br.com.campos.pedidos.adapters.out.repository.ProductRepository;
 import br.com.campos.pedidos.adapters.out.repository.entity.OrderEntity;
 import br.com.campos.pedidos.adapters.out.repository.entity.OrderItemEntity;
 import br.com.campos.pedidos.adapters.out.repository.entity.ProductEntity;
 import br.com.campos.pedidos.adapters.out.response.OrderResponse;
+import br.com.campos.pedidos.application.core.domain.Order;
 import br.com.campos.pedidos.application.core.domain.OrderItem;
 import br.com.campos.pedidos.application.core.domain.Product;
 import br.com.campos.pedidos.exceptions.OrderNotFoundException;
@@ -39,8 +39,8 @@ class UpdateOrderAdapterTest {
     private UpdateOrderAdapter updateOrderAdapter;
 
     private OrderEntity orderEntity;
-    private OrderRequest orderRequest;
 
+    private Order order;
     private final Long productId = 1L;
     private final Long orderId = 1L;
     private final Long orderItemId = 1L;
@@ -66,7 +66,7 @@ class UpdateOrderAdapterTest {
 
         OrderItem orderItem = new OrderItem(orderItemId, product, 2);
 
-        orderRequest = new OrderRequest(orderId,"Customer2",
+        order = new Order(orderId,"Customer2",
                 Collections.singletonList(orderItem));
 
     }
@@ -76,7 +76,7 @@ class UpdateOrderAdapterTest {
         when(orderRepository.findById(orderId)).thenReturn(Optional.of(orderEntity));
         when(orderRepository.save(any(OrderEntity.class))).thenReturn(orderEntity);
 
-        OrderResponse orderResponse = updateOrderAdapter.updateOrder(orderId, orderRequest);
+        OrderResponse orderResponse = updateOrderAdapter.updateOrder(orderId, order);
 
         assertNotNull(orderResponse);
         assertEquals("Customer2", orderResponse.getCustomerName());
@@ -91,7 +91,7 @@ class UpdateOrderAdapterTest {
         when(orderRepository.findById(orderId)).thenReturn(Optional.empty());
 
         assertThrows(OrderNotFoundException.class, () ->
-                updateOrderAdapter.updateOrder(orderId, orderRequest));
+                updateOrderAdapter.updateOrder(orderId, order));
 
         verify(orderRepository, times(1)).findById(orderId);
         verify(orderRepository, times(0)).save(any(OrderEntity.class));
@@ -102,7 +102,7 @@ class UpdateOrderAdapterTest {
         when(orderRepository.findById(orderId)).thenReturn(Optional.of(orderEntity));
         when(orderRepository.save(any(OrderEntity.class))).thenReturn(orderEntity);
 
-        OrderResponse orderResponse = updateOrderAdapter.updateOrder(orderId, orderRequest);
+        OrderResponse orderResponse = updateOrderAdapter.updateOrder(orderId, order);
 
         assertNotNull(orderResponse);
         assertEquals("Customer2", orderResponse.getCustomerName());

@@ -1,15 +1,15 @@
 package br.com.campos.pedidos.adapters.out.order;
 
-import br.com.campos.pedidos.adapters.in.controller.request.OrderRequest;
-import br.com.campos.pedidos.adapters.out.response.OrderItemResponse;
-import br.com.campos.pedidos.adapters.out.response.OrderResponse;
 import br.com.campos.pedidos.adapters.out.repository.OrderRepository;
 import br.com.campos.pedidos.adapters.out.repository.ProductRepository;
 import br.com.campos.pedidos.adapters.out.repository.entity.OrderEntity;
 import br.com.campos.pedidos.adapters.out.repository.entity.OrderItemEntity;
 import br.com.campos.pedidos.adapters.out.repository.entity.ProductEntity;
-import br.com.campos.pedidos.exceptions.ProductNotFoundException;
+import br.com.campos.pedidos.adapters.out.response.OrderItemResponse;
+import br.com.campos.pedidos.adapters.out.response.OrderResponse;
+import br.com.campos.pedidos.application.core.domain.Order;
 import br.com.campos.pedidos.application.ports.out.order.CreateOrderOutputPort;
+import br.com.campos.pedidos.exceptions.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,12 +33,12 @@ public class CreateOrderAdapter implements CreateOrderOutputPort {
 
     @Override
     @Transactional
-    public OrderResponse createOrder(OrderRequest order) {
+    public OrderResponse createOrder(Order order) {
 
         OrderEntity orderEntity = new OrderEntity();
-        orderEntity.setCustomerName(order.customerName());
+        orderEntity.setCustomerName(order.getCustomerName());
 
-        List<OrderItemEntity> orderItemEntities = order.items().stream()
+        List<OrderItemEntity> orderItemEntities = order.getItems().stream()
                 .map(orderItem -> {
                     ProductEntity productEntity = productRepository.findById(orderItem.getProduct().getId())
                             .orElseThrow(() -> new ProductNotFoundException(orderItem.getProduct().getId()

@@ -8,6 +8,7 @@ import br.com.campos.pedidos.adapters.out.repository.entity.OrderItemEntity;
 import br.com.campos.pedidos.adapters.out.repository.entity.ProductEntity;
 import br.com.campos.pedidos.adapters.out.response.OrderItemResponse;
 import br.com.campos.pedidos.adapters.out.response.OrderResponse;
+import br.com.campos.pedidos.application.core.domain.Order;
 import br.com.campos.pedidos.application.core.domain.OrderItem;
 import br.com.campos.pedidos.application.core.domain.Product;
 import br.com.campos.pedidos.exceptions.ProductNotFoundException;
@@ -36,6 +37,8 @@ class CreateOrderAdapterTest {
     @InjectMocks
     private CreateOrderAdapter createOrderAdapter;
 
+
+    private Order order;
     private OrderRequest orderRequest;
     private ProductEntity productEntity;
     private OrderEntity orderEntity;
@@ -54,8 +57,12 @@ class CreateOrderAdapterTest {
         product.setId(productId);
 
         OrderItem orderItem = new OrderItem(productId, product, 2);
-        orderRequest = new OrderRequest(productId, cliente,
+
+        order = new Order(productId, cliente,
                 Collections.singletonList(orderItem));
+
+        //orderRequest = new OrderRequest(productId, cliente,
+        //        Collections.singletonList(orderItem));
 
         OrderItemEntity orderItemEntity = new OrderItemEntity(
                 null, productEntity, orderItem.getQuantity(), null);
@@ -72,7 +79,7 @@ class CreateOrderAdapterTest {
         when(productRepository.findById(productId)).thenReturn(Optional.of(productEntity));
         when(orderRepository.save(any(OrderEntity.class))).thenReturn(orderEntity);
 
-        OrderResponse orderResponse = createOrderAdapter.createOrder(orderRequest);
+        OrderResponse orderResponse = createOrderAdapter.createOrder(order);
 
         assertNotNull(orderResponse);
         assertEquals(cliente, orderResponse.getCustomerName());
@@ -87,7 +94,7 @@ class CreateOrderAdapterTest {
         when(productRepository.findById(1L)).thenReturn(Optional.empty());
 
         assertThrows(ProductNotFoundException.class, () ->
-                createOrderAdapter.createOrder(orderRequest));
+                createOrderAdapter.createOrder(order));
 
         verify(productRepository, times(1)).findById(productId);
         verify(orderRepository, times(0)).save(any(OrderEntity.class));
@@ -98,7 +105,7 @@ class CreateOrderAdapterTest {
         when(productRepository.findById(productId)).thenReturn(Optional.of(productEntity));
         when(orderRepository.save(any(OrderEntity.class))).thenReturn(orderEntity);
 
-        OrderResponse orderResponse = createOrderAdapter.createOrder(orderRequest);
+        OrderResponse orderResponse = createOrderAdapter.createOrder(order);
         assertNotNull(orderResponse);
         assertEquals(cliente, orderResponse.getCustomerName());
 
@@ -112,7 +119,7 @@ class CreateOrderAdapterTest {
         when(productRepository.findById(productId)).thenReturn(Optional.of(productEntity));
         when(orderRepository.save(any(OrderEntity.class))).thenReturn(orderEntity);
 
-        OrderResponse orderResponse = createOrderAdapter.createOrder(orderRequest);
+        OrderResponse orderResponse = createOrderAdapter.createOrder(order);
 
         assertNotNull(orderResponse);
         assertEquals(cliente, orderResponse.getCustomerName());

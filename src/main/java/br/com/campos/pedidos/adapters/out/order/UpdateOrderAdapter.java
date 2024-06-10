@@ -1,15 +1,15 @@
 package br.com.campos.pedidos.adapters.out.order;
 
-import br.com.campos.pedidos.adapters.in.controller.request.OrderRequest;
 import br.com.campos.pedidos.adapters.out.repository.OrderRepository;
 import br.com.campos.pedidos.adapters.out.repository.ProductRepository;
 import br.com.campos.pedidos.adapters.out.repository.entity.OrderEntity;
 import br.com.campos.pedidos.adapters.out.repository.entity.OrderItemEntity;
 import br.com.campos.pedidos.adapters.out.repository.entity.ProductEntity;
-import br.com.campos.pedidos.exceptions.OrderNotFoundException;
 import br.com.campos.pedidos.adapters.out.response.OrderItemResponse;
 import br.com.campos.pedidos.adapters.out.response.OrderResponse;
+import br.com.campos.pedidos.application.core.domain.Order;
 import br.com.campos.pedidos.application.ports.out.order.UpdateOrderOutputPort;
+import br.com.campos.pedidos.exceptions.OrderNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,19 +31,19 @@ public class UpdateOrderAdapter implements UpdateOrderOutputPort {
 
     @Override
     @Transactional
-    public OrderResponse updateOrder(Long id, OrderRequest updatedOrder) {
+    public OrderResponse updateOrder(Long id, Order updatedOrder) {
 
         OrderEntity orderEntity = orderRepository.findById(id)
                 .orElseThrow(() -> new OrderNotFoundException(id.toString()));
 
-        orderEntity.setCustomerName(updatedOrder.customerName());
+        orderEntity.setCustomerName(updatedOrder.getCustomerName());
 
         Map<Long, OrderItemEntity> existingItemsMap = orderEntity.getItems().stream()
                 .collect(Collectors.toMap(orderItemEntity ->
                                 orderItemEntity.getProduct().getId(),
                         orderItemEntity -> orderItemEntity));
 
-        List<OrderItemEntity> updatedItems = updatedOrder.items().stream()
+        List<OrderItemEntity> updatedItems = updatedOrder.getItems().stream()
                 .map(orderItem -> {
                     OrderItemEntity existingItem = existingItemsMap.get(orderItem.getProduct().getId());
                     if (existingItem != null) {
