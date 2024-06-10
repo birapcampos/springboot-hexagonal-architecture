@@ -1,9 +1,11 @@
 package br.com.campos.pedidos.adapters.out.product;
 
+import br.com.campos.pedidos.adapters.in.controller.request.ProductRequest;
 import br.com.campos.pedidos.adapters.out.mapper.ProductMapper;
 import br.com.campos.pedidos.adapters.out.repository.ProductRepository;
 import br.com.campos.pedidos.adapters.out.repository.entity.ProductEntity;
 import br.com.campos.pedidos.adapters.out.response.ProductResponse;
+import br.com.campos.pedidos.application.core.domain.Product;
 import br.com.campos.pedidos.exceptions.ProductNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,8 +14,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class GetProductAdapterTest {
+class UpdateProductAdapterTestUseCase {
 
     @Mock
     private ProductRepository productRepository;
@@ -30,41 +30,47 @@ class GetProductAdapterTest {
     private ProductMapper productMapper;
 
     @InjectMocks
-    private GetProductAdapter getProductAdapter;
+    private UpdateProductAdapter updateProductAdapter;
 
-    private ProductEntity productEntity;
+    private ProductRequest productRequest;
+
+    private Product product;
     private ProductResponse productResponse;
+    private ProductEntity productEntity;
 
     @BeforeEach
     void setUp() {
+        product = new Product("Updated Product", 2000);
+        productRequest = new ProductRequest(1L, "Updated Product", 2000);
         productEntity = new ProductEntity();
         productEntity.setId(1L);
-        productEntity.setName("Product 1");
+        productEntity.setName("Original Product");
         productEntity.setPrice(1000);
-
         productResponse = new ProductResponse();
     }
 
     @Test
-    void testGetProduct_Success() {
+    void testUpdateProduct_Success() {
         when(productRepository.findById(any(Long.class))).thenReturn(Optional.of(productEntity));
+        when(productRepository.save(any(ProductEntity.class))).thenReturn(productEntity);
         when(productMapper.toProductResponse(any(ProductEntity.class))).thenReturn(productResponse);
 
-        Optional<ProductResponse> response = getProductAdapter.getProduct(1L);
+        ProductResponse response = updateProductAdapter.updateProduct(1L, product);
 
         verify(productRepository).findById(1L);
+        verify(productRepository).save(productEntity);
         verify(productMapper).toProductResponse(productEntity);
 
-        assertTrue(response.isPresent());
-        assertEquals(productResponse, response.get());
+        assertNotNull(response);
+        assertEquals(productResponse, response);
     }
 
     @Test
-    void testGetProduct_ProductNotFound() {
+    void testUpdateProduct_ProductNotFound() {
         when(productRepository.findById(any(Long.class))).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(ProductNotFoundException.class, () -> {
-            getProductAdapter.getProduct(1L);
+            updateProductAdapter.updateProduct(1L, product);
         });
 
         String expectedMessage = "Produto não encontrado com este Id: 1";
@@ -73,24 +79,8 @@ class GetProductAdapterTest {
         assertEquals(expectedMessage, actualMessage);
 
         verify(productRepository).findById(1L);
+        verify(productRepository, never()).save(any(ProductEntity.class));
         verify(productMapper, never()).toProductResponse(any(ProductEntity.class));
     }
 
-    @Test
-    void testGetAllProducts_Success() {
-        List<ProductEntity> productEntities = Arrays.asList(productEntity);
-        List<ProductResponse> productResponses = Arrays.asList(productResponse);
-
-        when(productRepository.findAll()).thenReturn(productEntities);
-        when(productMapper.toProductResponse(any(ProductEntity.class))).thenReturn(productResponse);
-
-        List<ProductResponse> responses = getProductAdapter.getAllProducts();
-
-        verify(productRepository).findAll();
-        verify(productMapper, times(productEntities.size())).toProductResponse(any(ProductEntity.class));
-
-        assertNotNull(responses);
-        assertEquals(productResponses.size(), responses.size());
-        assertEquals(productResponses, responses);
-    }
 }

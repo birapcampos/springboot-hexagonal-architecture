@@ -1,8 +1,8 @@
 package br.com.campos.pedidos.application.ports.out.product;
 
-import br.com.campos.pedidos.adapters.in.controller.request.ProductRequest;
 import br.com.campos.pedidos.adapters.out.response.ProductResponse;
+import br.com.campos.pedidos.application.core.domain.Product;
 
 public interface CreateProductOutputPort {
-    ProductResponse create(ProductRequest product);
+    ProductResponse create(Product product);
 }

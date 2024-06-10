@@ -3,6 +3,7 @@ package br.com.campos.pedidos.adapters.in.controller;
 import br.com.campos.pedidos.adapters.in.controller.request.ProductRequest;
 import br.com.campos.pedidos.adapters.out.response.ProductResponse;
 import br.com.campos.pedidos.application.ports.in.product.ProductInputPort;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -21,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(ProductController.class)
 @AutoConfigureMockMvc
-class ProductControllerTest {
+class ProductUseCaseControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -29,10 +30,17 @@ class ProductControllerTest {
     @MockBean
     private ProductInputPort productInputPort;
 
+    private ProductRequest request;
+    private ProductResponse response;
+
+    @BeforeEach
+    void setUp(){
+        request = new ProductRequest(1L, "Product", 1000);
+        response = new ProductResponse(1L, "Product", 1000);
+    }
+
     @Test
     void testCreateProduct() throws Exception {
-        ProductRequest request = new ProductRequest(1L, "Product", 1000);
-        ProductResponse response = new ProductResponse(1L, "Product", 1000);
 
         when(productInputPort.create(any(ProductRequest.class))).thenReturn(response);
 
@@ -47,7 +55,6 @@ class ProductControllerTest {
 
     @Test
     void testGetProduct() throws Exception {
-        ProductResponse response = new ProductResponse(1L, "Product", 1000);
 
         when(productInputPort.getProduct(1L)).thenReturn(Optional.of(response));
 
@@ -60,7 +67,6 @@ class ProductControllerTest {
 
     @Test
     void testGetAllProducts() throws Exception {
-        ProductResponse response = new ProductResponse(1L, "Product", 1000);
 
         when(productInputPort.getAllProducts()).thenReturn(Collections.singletonList(response));
 
@@ -79,17 +85,18 @@ class ProductControllerTest {
 
     @Test
     void testUpdateProduct() throws Exception {
-        ProductRequest request = new ProductRequest(1L, "Updated Product", 2000);
-        ProductResponse response = new ProductResponse(1L, "Updated Product", 2000);
 
-        when(productInputPort.updateProduct(1L, request)).thenReturn(response);
+        ProductRequest requestUpdate = new ProductRequest(1L, "Geladeira", 3150);
+        ProductResponse responseUpdate = new ProductResponse(1L, "Geladeira", 3150);
+
+        when(productInputPort.updateProduct(1L, requestUpdate)).thenReturn(responseUpdate);
 
         mockMvc.perform(put("/api/v1/product/1")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{ \"id\": 1, \"name\": \"Updated Product\", \"price\": 2000 }"))
+                        .content("{ \"id\": 1, \"name\": \"Geladeira\", \"price\": 3150 }"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.name").value("Updated Product"))
-                .andExpect(jsonPath("$.price").value(2000));
+                .andExpect(jsonPath("$.name").value("Geladeira"))
+                .andExpect(jsonPath("$.price").value(3150));
     }
 }

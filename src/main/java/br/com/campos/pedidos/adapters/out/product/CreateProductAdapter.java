@@ -1,9 +1,9 @@
 package br.com.campos.pedidos.adapters.out.product;
 
-import br.com.campos.pedidos.adapters.in.controller.request.ProductRequest;
-import br.com.campos.pedidos.adapters.out.repository.ProductRepository;
 import br.com.campos.pedidos.adapters.out.mapper.ProductMapper;
+import br.com.campos.pedidos.adapters.out.repository.ProductRepository;
 import br.com.campos.pedidos.adapters.out.response.ProductResponse;
+import br.com.campos.pedidos.application.core.domain.Product;
 import br.com.campos.pedidos.application.ports.out.product.CreateProductOutputPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,7 +22,8 @@ public class CreateProductAdapter implements CreateProductOutputPort {
     }
 
     @Override
-    public ProductResponse create(ProductRequest product) {
-        return productMapper.toProductResponse(productRepository.save(productMapper.toEntity(product)));
+    public ProductResponse create(Product product) {
+        return productMapper.toProductResponse(productRepository.save(
+                productMapper.toEntity(product)));
     }
 }

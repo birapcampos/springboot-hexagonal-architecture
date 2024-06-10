@@ -5,6 +5,7 @@ import br.com.campos.pedidos.adapters.out.mapper.ProductMapper;
 import br.com.campos.pedidos.adapters.out.repository.ProductRepository;
 import br.com.campos.pedidos.adapters.out.repository.entity.ProductEntity;
 import br.com.campos.pedidos.adapters.out.response.ProductResponse;
+import br.com.campos.pedidos.application.core.domain.Product;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,10 +16,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-class CreateProductAdapterTest {
+class CreateProductAdapterTestUseCase {
 
     @Mock
     private ProductRepository productRepository;
@@ -30,11 +32,15 @@ class CreateProductAdapterTest {
     private CreateProductAdapter createProductAdapter;
 
     private ProductRequest productRequest;
+
+    private Product product;
     private ProductResponse productResponse;
     private ProductEntity productEntity;
 
     @BeforeEach
     void setUp() {
+
+        product = new Product("Geladeira", 1500);
         productRequest = new ProductRequest(1L, "Geladeira", 1500);
         productEntity = new ProductEntity();
         productEntity.setId(1L);
@@ -43,13 +49,13 @@ class CreateProductAdapterTest {
 
     @Test
     void testCreate() {
-        lenient().when(productMapper.toEntity(any(ProductRequest.class))).thenReturn(productEntity);
+        lenient().when(productMapper.toEntity(any(Product.class))).thenReturn(productEntity);
         lenient().when(productRepository.save(any(ProductEntity.class))).thenReturn(productEntity);
         lenient().when(productMapper.toProductResponse(any(ProductEntity.class))).thenReturn(productResponse);
 
-        ProductResponse response = createProductAdapter.create(productRequest);
+        ProductResponse response = createProductAdapter.create(product);
 
-        verify(productMapper).toEntity(productRequest);
+        verify(productMapper).toEntity(product);
         verify(productRepository).save(productEntity);
         verify(productMapper).toProductResponse(productEntity);
 

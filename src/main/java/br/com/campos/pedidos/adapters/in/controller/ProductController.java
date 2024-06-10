@@ -20,6 +20,7 @@ public class ProductController {
 
     @Autowired
     public ProductController(ProductInputPort productInputPort) {
+
         this.productInputPort=productInputPort;
     }
 
@@ -50,7 +51,7 @@ public class ProductController {
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable Long id,
                                                          @Valid @RequestBody ProductRequest product) {
-        ProductResponse updatedProduct = productInputPort.updateProduct(id, product);
+        ProductResponse updatedProduct = productInputPort.updateProduct(id,product);
         return ResponseEntity.ok(updatedProduct);
     }
 }
