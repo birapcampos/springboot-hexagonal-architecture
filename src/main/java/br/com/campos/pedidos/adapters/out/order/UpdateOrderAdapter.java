@@ -23,7 +23,6 @@ public class UpdateOrderAdapter implements UpdateOrderOutputPort {
     private OrderRepository orderRepository;
     private ProductRepository productRepository;
 
-
     public UpdateOrderAdapter(OrderRepository orderRepository, ProductRepository productRepository) {
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;

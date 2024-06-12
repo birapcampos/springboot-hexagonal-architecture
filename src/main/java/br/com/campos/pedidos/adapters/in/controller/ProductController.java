@@ -4,7 +4,6 @@ import br.com.campos.pedidos.adapters.in.controller.request.ProductRequest;
 import br.com.campos.pedidos.adapters.out.response.ProductResponse;
 import br.com.campos.pedidos.application.ports.in.product.ProductInputPort;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +17,7 @@ public class ProductController {
 
     private ProductInputPort productInputPort;
 
-    @Autowired
     public ProductController(ProductInputPort productInputPort) {
-
         this.productInputPort=productInputPort;
     }
 

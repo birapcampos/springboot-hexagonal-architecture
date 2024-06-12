@@ -5,7 +5,6 @@ import br.com.campos.pedidos.adapters.out.repository.entity.OrderEntity;
 import br.com.campos.pedidos.adapters.out.response.OrderItemResponse;
 import br.com.campos.pedidos.adapters.out.response.OrderResponse;
 import br.com.campos.pedidos.application.ports.out.order.GetOrderOutputPort;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,8 +16,8 @@ public class GetOrderAdapter implements GetOrderOutputPort {
 
     private OrderRepository orderRepository;
 
-    @Autowired
     public GetOrderAdapter(OrderRepository orderRepository) {
+
         this.orderRepository = orderRepository;
     }
 

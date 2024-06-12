@@ -10,7 +10,6 @@ import br.com.campos.pedidos.adapters.out.response.OrderResponse;
 import br.com.campos.pedidos.application.core.domain.Order;
 import br.com.campos.pedidos.application.ports.out.order.CreateOrderOutputPort;
 import br.com.campos.pedidos.exceptions.ProductNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +21,6 @@ public class CreateOrderAdapter implements CreateOrderOutputPort {
 
     private ProductRepository productRepository;
     private OrderRepository orderRepository;
-    @Autowired
     public CreateOrderAdapter(
             ProductRepository productRepository,
             OrderRepository orderRepository) {

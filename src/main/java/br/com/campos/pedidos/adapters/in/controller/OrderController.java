@@ -6,7 +6,6 @@ import br.com.campos.pedidos.application.ports.in.order.CreateOrderInputPort;
 import br.com.campos.pedidos.application.ports.in.order.DeleteOrderInputPort;
 import br.com.campos.pedidos.application.ports.in.order.GetOrderInputPort;
 import br.com.campos.pedidos.application.ports.in.order.UpdateOrderInputPort;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -21,8 +20,6 @@ public class OrderController {
     private UpdateOrderInputPort updateOrderInputPort;
     private GetOrderInputPort getOrderInputPort;
     private DeleteOrderInputPort deleteOrderInputPort;
-
-    @Autowired
     public OrderController(CreateOrderInputPort createOrderInputPort,
                            UpdateOrderInputPort updateOrderInputPort,
                            GetOrderInputPort getOrderInputPort,

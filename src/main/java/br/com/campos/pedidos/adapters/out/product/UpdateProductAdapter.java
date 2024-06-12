@@ -7,7 +7,6 @@ import br.com.campos.pedidos.adapters.out.response.ProductResponse;
 import br.com.campos.pedidos.application.core.domain.Product;
 import br.com.campos.pedidos.application.ports.out.product.UpdateProductOutputPort;
 import br.com.campos.pedidos.exceptions.ProductNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -16,7 +15,7 @@ public class UpdateProductAdapter implements UpdateProductOutputPort {
 
     private ProductRepository productRepository;
     private ProductMapper productMapper;
-    @Autowired
+
     public UpdateProductAdapter(ProductRepository productRepository, ProductMapper productMapper) {
         this.productRepository = productRepository;
         this.productMapper = productMapper;

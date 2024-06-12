@@ -5,7 +5,6 @@ import br.com.campos.pedidos.adapters.out.repository.ProductRepository;
 import br.com.campos.pedidos.adapters.out.response.ProductResponse;
 import br.com.campos.pedidos.application.core.domain.Product;
 import br.com.campos.pedidos.application.ports.out.product.CreateProductOutputPort;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,7 +13,6 @@ public class CreateProductAdapter implements CreateProductOutputPort {
     private ProductRepository productRepository;
     private ProductMapper productMapper;
 
-    @Autowired
     public CreateProductAdapter(ProductRepository productRepository,
                                 ProductMapper productMapper) {
         this.productRepository = productRepository;

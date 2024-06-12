@@ -1,11 +1,10 @@
 package br.com.campos.pedidos.adapters.out.product;
 
+import br.com.campos.pedidos.adapters.out.mapper.ProductMapper;
 import br.com.campos.pedidos.adapters.out.repository.ProductRepository;
 import br.com.campos.pedidos.adapters.out.repository.entity.ProductEntity;
-import br.com.campos.pedidos.exceptions.ProductNotFoundException;
-import br.com.campos.pedidos.adapters.out.mapper.ProductMapper;
 import br.com.campos.pedidos.application.ports.out.product.DeleteProductOutputPort;
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.campos.pedidos.exceptions.ProductNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -15,7 +14,6 @@ public class DeleteProductAdapter implements DeleteProductOutputPort {
     private ProductRepository productRepository;
     private ProductMapper productMapper;
 
-    @Autowired
     public DeleteProductAdapter(ProductRepository productRepository, ProductMapper productMapper) {
         this.productRepository = productRepository;
         this.productMapper = productMapper;
